@@ -5,26 +5,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nik.konverter.R
-import com.nik.konverter.model.forms.Valute
+import com.nik.konverter.database.Valuta
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_valute.view.*
 
-class ValuteRVAdapter(val onItemClick: ((Valute) -> Unit)? =null): RecyclerView.Adapter<ValuteRVAdapter.ViewHolder>() {
+class ValuteRVAdapter(val onItemClick: ((Valuta) -> Unit)? =null): RecyclerView.Adapter<ValuteRVAdapter.ViewHolder>() {
 
-    var valutes: List<Valute> = listOf()
+    var valutas: List<Valuta> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
     inner class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun bind(valute: Valute) = with(itemView) {
+        fun bind(valuta: Valuta) = with(itemView) {
 
-            tv_name.text = valute.name
-            tv_char_code.text = valute.charCode
+            tv_name.text = valuta.name
+            tv_char_code.text = valuta.charCode
 
             itemView.setOnClickListener {
-                onItemClick?.invoke(valute)
+                onItemClick?.invoke(valuta)
             }
         }
     }
@@ -33,7 +33,7 @@ class ValuteRVAdapter(val onItemClick: ((Valute) -> Unit)? =null): RecyclerView.
         LayoutInflater.from(parent.context)
             .inflate(R.layout.item_valute, parent, false))
 
-    override fun getItemCount() = valutes.size
+    override fun getItemCount() = valutas.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(valutes[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(valutas[position])
 }

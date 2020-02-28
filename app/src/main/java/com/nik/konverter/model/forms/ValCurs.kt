@@ -14,6 +14,6 @@ data class ValCurs(
     var name: String,
 
     @field:ElementList(entry = "Valute", inline = true)
-    var valutes: List<Valute>) {
-    constructor() : this("","",mutableListOf<Valute>())
+    var valutes: MutableList<Valute>) {
+    constructor() : this("","", mutableListOf<Valute>())
 }

@@ -3,16 +3,17 @@ package com.nik.konverter.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.nik.konverter.model.forms.Valute
 
 @Entity
 data class Valuta(
     @PrimaryKey
-    private val id: String,
+    val id: String,
     @ColumnInfo
-    private val name: String,
+    val name: String,
     @ColumnInfo
-    private val charCode: String,
+    val charCode: String,
     @ColumnInfo
-    private val value: String)
+    val value: String)
 
 

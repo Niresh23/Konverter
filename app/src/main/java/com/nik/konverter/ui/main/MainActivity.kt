@@ -2,48 +2,70 @@ package com.nik.konverter.ui.main
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
+import android.widget.Toast
 import com.nik.konverter.R
+import com.nik.konverter.model.forms.ActionResult
+import com.nik.konverter.model.forms.DataResult
+import com.nik.konverter.ui.base.BaseActivity
 import com.nik.konverter.ui.valutes.ValuteActivity
-import com.nik.konverter.model.forms.ValCurs
-import com.nik.konverter.presenter.Presenter
-import io.reactivex.Single
 import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.http.GET
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity() {
-
-
+class MainActivity: BaseActivity<DataResult?, MainViewState>() {
 
     companion object {
-        private val ID_EXTRA = MainActivity::class.java.name + "ID_EXTRA"
-        private val SIDE_EXTRA = MainActivity::class.java.name + "SIDE_EXTRA"
-        fun start(context: Context, id: String, side: String) = Intent(context, ValuteActivity::class.java).run {
-            putExtra(ID_EXTRA, id)
-            putExtra(SIDE_EXTRA, side)
+        private val MESSAGE_EXTRA = MainActivity::class.java.name + "MESSAGE_EXTRA"
+        fun start(context: Context, message: String) = Intent(context, MainActivity::class.java).run {
+            putExtra(MESSAGE_EXTRA, message)
             context.startActivity(this)
         }
     }
-    lateinit var presenter: Presenter
 
-    private val id = intent.getStringExtra(ID_EXTRA)
+    override val model: MainViewModel by viewModel()
+    override val layoutRes: Int = R.layout.activity_main
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
+        val message = intent.getStringExtra(MESSAGE_EXTRA)
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         btn_left.setOnClickListener{
-            val SIDE = "left"
-            ValuteActivity.start(this, SIDE, )
+            ValuteActivity.start(this, "left")
+        }
+    }
+
+    override fun renderData(data: DataResult?) {
+        data?.let {
+
+        }
+    }
+
+    private val textChangeListener = object : TextWatcher {
+        override fun afterTextChanged(p0: Editable?) {
+
         }
 
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
     }
 
-    interface RestApi {
-        @GET("scripts/XML_daily.asp")
-        fun getValute(): Single<ValCurs>
+
+    private fun initView() {
+        left_edit_text.removeTextChangedListener(textChangeListener)
+        right_edit_text.removeTextChangedListener(textChangeListener)
+        left_edit_text.addTextChangedListener(textChangeListener)
+        right_edit_text.addTextChangedListener(textChangeListener)
     }
+
+
 }
