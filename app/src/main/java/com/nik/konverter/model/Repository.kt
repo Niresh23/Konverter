@@ -48,8 +48,6 @@ class Repository {
         })
     }
 
-    fun remouteRequest() = remouteRepository.getValCurse()
-
     fun getValutaById(context: Context, leftId: String) = DatabaseRepository.getInstance(context).getById(leftId)
 
     fun insertValutas(context: Context, valutas: List<Valuta>) = DatabaseRepository.getInstance(context).insertValutas(valutas)
