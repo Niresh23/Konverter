@@ -16,9 +16,9 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class ValuteActivity: BaseActivity<List<Valuta>?, ValuteViewState>() {
 
     companion object {
-        private val ID_EXTRA = ValuteActivity::class.java.name + "extraID"
+        private val MESSAGE_EXTRA = ValuteActivity::class.java.name + "MESSAGE_EXTRA"
         fun start(context: Context, id: String) = Intent(context, ValuteActivity::class.java).run {
-            putExtra(ID_EXTRA, id)
+            putExtra(MESSAGE_EXTRA, id)
             context.startActivity(this)
         }
     }
@@ -34,9 +34,9 @@ class ValuteActivity: BaseActivity<List<Valuta>?, ValuteViewState>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val id = intent.getStringExtra(ID_EXTRA)
+        val message = intent.getStringExtra(MESSAGE_EXTRA)
         adapter = ValuteRVAdapter{
-            MainActivity.start(this, it.id)
+            MainActivity.start(this, message, it.id)
         }
         rv_valutes.layoutManager = GridLayoutManager(this, 1)
         rv_valutes.adapter = adapter

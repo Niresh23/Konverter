@@ -17,8 +17,10 @@ class MainActivity: BaseActivity<DataResult?, MainViewState>() {
 
     companion object {
         private val MESSAGE_EXTRA = MainActivity::class.java.name + "MESSAGE_EXTRA"
-        fun start(context: Context, message: String) = Intent(context, MainActivity::class.java).run {
+        private val ID_EXTRA = MainActivity::class.java.name + "ID_EXTRA"
+        fun start(context: Context, message: String, id: String) = Intent(context, MainActivity::class.java).run {
             putExtra(MESSAGE_EXTRA, message)
+            putExtra(ID_EXTRA, id)
             context.startActivity(this)
         }
     }
@@ -27,14 +29,20 @@ class MainActivity: BaseActivity<DataResult?, MainViewState>() {
     override val layoutRes: Int = R.layout.activity_main
     var dataResult: DataResult? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        model.getData(this)
         val message = intent.getStringExtra(MESSAGE_EXTRA)
+        val id = intent.getStringExtra(ID_EXTRA)
+        if(message == "left") {
+            model.leftValutaChanged(id, dataResult)
+        } else if(message == "right") {
+            model.rightValutaChanged(id, dataResult)
+        }
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         btn_left.setOnClickListener{
             ValuteActivity.start(this, "left")
-        }
+    }
     }
 
     override fun renderData(data: DataResult?) {
@@ -51,7 +59,7 @@ class MainActivity: BaseActivity<DataResult?, MainViewState>() {
 
     private val textChangeListenerLeft = object : TextWatcher {
         override fun afterTextChanged(p0: Editable?) {
-
+            model.leftValueChanged(left_edit_text.text.toString(), dataResult)
         }
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }

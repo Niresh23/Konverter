@@ -19,7 +19,7 @@ class SplashActivity: BaseActivity<String?, SplashViewState>(){
     override fun renderData(data: String?) {
         data?.let {
             Log.d("SplashActivity", "renderData()")
-            MainActivity.start(this, data)
+            MainActivity.start(this, data, "1")
         }
     }
 
