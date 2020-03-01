@@ -5,9 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
+import android.view.KeyEvent
+import android.view.View
 import android.widget.Toast
 import com.nik.konverter.R
 import com.nik.konverter.model.forms.DataResult
+import com.nik.konverter.model.forms.Valute
 import com.nik.konverter.ui.base.BaseActivity
 import com.nik.konverter.ui.valutes.ValuteActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -29,21 +33,49 @@ class MainActivity: BaseActivity<DataResult?, MainViewState>() {
     override val layoutRes: Int = R.layout.activity_main
     var dataResult: DataResult? = null
 
+    private val leftKeyListener = View.OnKeyListener {view, keyCode, event ->
+        if((event.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+            model.leftValueChanged(left_edit_text.text.toString(), dataResult)
+        }
+        return@OnKeyListener false
+    }
+    private val rightKeyListener = View.OnKeyListener {view, keyCode, event ->
+        if((event.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+            model.rightValueChanged(right_edit_text.text.toString(), dataResult)
+        }
+        return@OnKeyListener false
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("MainActivity", "onCreate()")
         model.getData(this)
         val message = intent.getStringExtra(MESSAGE_EXTRA)
         val id = intent.getStringExtra(ID_EXTRA)
-        if(message == "left") {
-            model.leftValutaChanged(id, dataResult)
-        } else if(message == "right") {
-            model.rightValutaChanged(id, dataResult)
+        if (message == "left") {
+            model.leftValutaChanged(this, id, dataResult)
+        } else if (message == "right") {
+            model.rightValutaChanged(this, id, dataResult)
         }
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-        btn_left.setOnClickListener{
+
+        btn_left.setOnClickListener {
             ValuteActivity.start(this, "left")
+        }
+
+        btn_right.setOnClickListener {
+            ValuteActivity.start(this, "right")
+        }
+
+        left_edit_text.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) left_edit_text.text.clear()
+        }
+
+        right_edit_text.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) right_edit_text.text.clear()
+        }
     }
-    }
+
+
 
     override fun renderData(data: DataResult?) {
         data?.let {
@@ -53,33 +85,10 @@ class MainActivity: BaseActivity<DataResult?, MainViewState>() {
                 right_edit_text.setText(resultRight)
                 left_text.text = charCodeLeft
                 right_text.text = charCodeRight
+                left_edit_text.setOnKeyListener(leftKeyListener)
+                right_edit_text.setOnKeyListener(rightKeyListener)
             }
         }
     }
-
-    private val textChangeListenerLeft = object : TextWatcher {
-        override fun afterTextChanged(p0: Editable?) {
-            model.leftValueChanged(left_edit_text.text.toString(), dataResult)
-        }
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
-    }
-
-    private val textChangeListenerRight = object : TextWatcher {
-        override fun afterTextChanged(s: Editable?) {
-            model.rightValueChanged(left_edit_text.text.toString(), dataResult)
-        }
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
-    }
-
-
-    private fun initView() {
-        left_edit_text.removeTextChangedListener(textChangeListenerLeft)
-        right_edit_text.removeTextChangedListener(textChangeListenerRight)
-        left_edit_text.addTextChangedListener(textChangeListenerLeft)
-        right_edit_text.addTextChangedListener(textChangeListenerRight)
-    }
-
 
 }

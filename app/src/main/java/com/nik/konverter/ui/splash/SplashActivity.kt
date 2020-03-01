@@ -14,11 +14,12 @@ class SplashActivity: BaseActivity<String?, SplashViewState>(){
 
     override fun onResume() {
         super.onResume()
+        Log.d("SplashActivity", "renderData()")
         model.update(this)
     }
     override fun renderData(data: String?) {
         data?.let {
-            Log.d("SplashActivity", "renderData()")
+            Log.d("SplashActivity", "renderData($it)")
             MainActivity.start(this, data, "1")
         }
     }

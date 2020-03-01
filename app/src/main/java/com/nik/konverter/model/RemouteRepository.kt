@@ -18,7 +18,7 @@ class RemouteRepository {
         .build()
 
     fun getValCurse() =
-        retrofit.create(RestApi::class.java).getValute().retry(2)
+        retrofit.create(RestApi::class.java).getValute().retry(1)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 }

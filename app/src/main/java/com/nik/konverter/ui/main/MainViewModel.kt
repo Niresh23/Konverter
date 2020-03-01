@@ -19,15 +19,19 @@ class MainViewModel: BaseViewModel <DataResult?, MainViewState>() {
     }
 
     private val repository: Repository = Repository()
-    var listValutas: List<Valuta>? = null
 
     fun getData(context: Context) {
+        Log.d("MainViewModel", "getData()")
         repository.getValutasResult(context).observeForever{
             when(it) {
-                is ActionResult.Success<*> -> listValutas = it.data as List<Valuta>
+
+                is ActionResult.Success<*> -> {
+                    Log.d("MainViewModel", "getData().observeForever().Success")
+                    viewStateLiveData.value = MainViewState(dataResult = process(it.data as List<Valuta>?, ID_RUB, ID_USD))
+                }
                 is ActionResult.Error -> viewStateLiveData.value = MainViewState(error = it.error)
             }
-                viewStateLiveData.value = MainViewState(dataResult = process(listValutas, ID_RUB, ID_USD))
+
         }
     }
 
@@ -54,8 +58,8 @@ class MainViewModel: BaseViewModel <DataResult?, MainViewState>() {
 
             try {
                 enteredValue = enteredString.toFloat()
-                resultRight = (enteredValue * valueRight!!/valueLeft!!).toString()
-                resultLeft = enteredString
+                resultRight = enteredString
+                resultLeft = (enteredValue * valueRight!!/valueLeft!!).toString()
                 viewStateLiveData.value = MainViewState(dataResult = this)
             } catch(e: Exception) {
                 viewStateLiveData.value = MainViewState(error = Exception("Некорректно введено значение"))
@@ -63,36 +67,54 @@ class MainViewModel: BaseViewModel <DataResult?, MainViewState>() {
         }
     }
 
-    fun rightValutaChanged(id: String, dataResult: DataResult?) {
-        listValutas?.forEach{
-            if (it.id == id) {
-                try {
-                    dataResult?.idRight = it.id
-                    dataResult?.valueRight = it.value.replace(",", ".").toFloat()
-                    dataResult?.charCodeRight = it.charCode
-                    dataResult?.resultRight = (dataResult!!.resultLeft!!.toFloat() * dataResult.valueRight!!/ dataResult.valueLeft!!).toString()
-                    viewStateLiveData.value = MainViewState(dataResult = dataResult)
-                } catch(e: Exception) {
-                    viewStateLiveData.value = MainViewState(error = Exception("Некорректно введено значение"))
+    fun rightValutaChanged(context: Context, id: String, dataResult: DataResult?) {
+        repository.getValutasResult(context).observeForever{
+            when(it) {
+                is ActionResult.Success<*> -> {
+                    try {
+                        (it.data as List<Valuta>?)?.forEach {
+                            if (it.id == id) {
+
+                                dataResult?.idRight = it.id
+                                dataResult?.valueRight = it.value.replace(",", ".").toFloat()
+                                dataResult?.charCodeRight = it.charCode
+                                dataResult?.resultRight =
+                                    (dataResult!!.resultLeft!!.toFloat() * dataResult.valueRight!! / dataResult.valueLeft!!).toString()
+                                viewStateLiveData.value = MainViewState(dataResult = dataResult)
+                            }
+                            return@forEach
+                        }
+                    } catch (e: Exception) {
+                        viewStateLiveData.value = MainViewState(error = Exception("Некорректно введено значение"))
+                    }
                 }
-                return@forEach
+                is ActionResult.Error -> viewStateLiveData.value = MainViewState(error = it.error)
             }
+
         }
+
     }
 
-    fun leftValutaChanged(id: String, dataResult: DataResult?) {
-        listValutas?.forEach{
-            if (it.id == id) {
-                try {
-                    dataResult?.idLeft = it.id
-                    dataResult?.valueLeft = it.value.replace(",", ".").toFloat()
-                    dataResult?.charCodeLeft = it.charCode
-                    dataResult?.resultLeft = (dataResult!!.resultRight!!.toFloat() * dataResult.valueLeft!!/ dataResult.valueRight!!).toString()
-                    viewStateLiveData.value = MainViewState(dataResult = dataResult)
-                } catch(e: Exception) {
-                    viewStateLiveData.value = MainViewState(error = Exception("Некорректно введено значение"))
+    fun leftValutaChanged(context: Context, id: String, dataResult: DataResult?) {
+        repository.getValutasResult(context).observeForever{
+            when(it) {
+                is ActionResult.Success<*> -> {
+                    try {
+                        (it.data as List<Valuta>?)?.forEach {
+                            if (it.id == id) {
+                                dataResult?.idLeft = it.id
+                                dataResult?.valueLeft = it.value.replace(",", ".").toFloat()
+                                dataResult?.charCodeLeft = it.charCode
+                                dataResult?.resultLeft = (dataResult!!.resultRight!!.toFloat() * dataResult.valueLeft!!/ dataResult.valueRight!!).toString()
+                                viewStateLiveData.value = MainViewState(dataResult = dataResult)
+                            }
+                            return@forEach
+                        }
+                    } catch (e: Exception) {
+                        viewStateLiveData.value = MainViewState(error = Exception("Некорректно введено значение"))
+                    }
                 }
-                return@forEach
+                is ActionResult.Error -> viewStateLiveData.value = MainViewState(error = it.error)
             }
         }
     }
@@ -114,5 +136,11 @@ class MainViewModel: BaseViewModel <DataResult?, MainViewState>() {
             }
         }
     }
+
+    override fun onCleared() {
+        super.onCleared()
+
+    }
+
 
 }

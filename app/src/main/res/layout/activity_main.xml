@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".ui.main.MainActivity">
 
     <EditText
@@ -52,9 +54,9 @@
         android:id="@+id/btn_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Button"
-        app:layout_constraintEnd_toEndOf="@+id/left_text"
         app:layout_constraintStart_toStartOf="@+id/left_text"
         app:layout_constraintTop_toBottomOf="@+id/left_text" />
 
@@ -63,9 +65,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:text="Button"
         app:layout_constraintEnd_toEndOf="@+id/right_text"
-        app:layout_constraintStart_toStartOf="@+id/right_text"
         app:layout_constraintTop_toBottomOf="@+id/right_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
