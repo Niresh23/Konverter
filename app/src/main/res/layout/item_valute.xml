@@ -12,12 +12,12 @@
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="300dp"
+            android:layout_width="285dp"
             android:layout_height="75dp"
             android:layout_margin="8dp"
+            android:background="@color/colorCardBackground"
             android:gravity="center"
             android:textSize="18sp"
-            android:background="@color/colorCardBackground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -25,10 +25,10 @@
         <TextView
             android:id="@+id/tv_char_code"
             android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_height="75dp"
             android:layout_margin="8dp"
-            android:textSize="30sp"
             android:background="@color/colorCardBackground"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_name"
             app:layout_constraintTop_toTopOf="parent" />

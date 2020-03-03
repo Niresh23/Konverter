@@ -17,9 +17,7 @@ abstract class BaseActivity<T, S: BaseViewState<T>>: AppCompatActivity() {
         layoutRes?.let {
             setContentView(it)
         }
-        Log.d("BaseActivity", "onCreate()")
         model.getViewState().observe(this, Observer<S> {viewState ->
-            Log.d("BaseActivity", "getViewState().observe()")
             viewState.error?.let {
                 renderError(it)
                 return@Observer
@@ -32,6 +30,5 @@ abstract class BaseActivity<T, S: BaseViewState<T>>: AppCompatActivity() {
 
     abstract fun renderData(data: T)
     private fun renderError(error: Throwable) {
-        Log.d("BaseActivity", error.message)
         Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()}
 }

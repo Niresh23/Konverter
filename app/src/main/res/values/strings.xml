@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Konverter</string>
+    <string name="change_valuta">Изменить валюту</string>
 </resources>
