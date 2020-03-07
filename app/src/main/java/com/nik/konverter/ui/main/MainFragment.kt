@@ -68,11 +68,11 @@ class MainFragment: Fragment() {
         }
 
         left_edit_text.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) left_edit_text.text.clear()
+            if (hasFocus) left_edit_text.text?.clear()
         }
 
         right_edit_text.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) right_edit_text.text.clear()
+            if (hasFocus) right_edit_text.text?.clear()
         }
     }
 
