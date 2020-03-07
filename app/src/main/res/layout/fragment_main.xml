@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="TextView"
-        android:textSize="40dp"
+        android:textSize="40sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/left_edit_text" />
 
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="TextView"
-        android:textSize="40dp"
+        android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/right_edit_text" />
 
