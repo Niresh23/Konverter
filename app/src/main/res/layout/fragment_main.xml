@@ -47,23 +47,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/right_edit_text" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/change_valuta"
+        style = "@style/Widget.MaterialComponents.Button.OutlinedButton"
         app:layout_constraintStart_toStartOf="@+id/left_text"
         app:layout_constraintTop_toBottomOf="@+id/left_text" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/change_valuta"
+        style = "@style/Widget.MaterialComponents.Button.OutlinedButton"
         app:layout_constraintEnd_toEndOf="@+id/right_text"
         app:layout_constraintTop_toBottomOf="@+id/right_text" />
 </androidx.constraintlayout.widget.ConstraintLayout>
