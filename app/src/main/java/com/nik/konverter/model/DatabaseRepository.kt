@@ -12,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
 
 class DatabaseRepository private constructor(val context: Context){
 
-    companion object: SingletoneHolder<DatabaseRepository, Context> (::DatabaseRepository)
+
 
     private val database: AppDatabase
 
