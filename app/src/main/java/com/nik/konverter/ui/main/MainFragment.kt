@@ -81,8 +81,8 @@ class MainFragment: Fragment() {
             it.apply {
                 left_edit_text.setText(resultLeft)
                 right_edit_text.setText(resultRight)
-                left_text.text = charCodeLeft
-                right_text.text = charCodeRight
+                btn_left.text = charCodeLeft
+                btn_right.text = charCodeRight
                 left_edit_text.setOnKeyListener(leftKeyListener)
                 right_edit_text.setOnKeyListener(rightKeyListener)
             }
