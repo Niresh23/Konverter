@@ -10,14 +10,13 @@ import com.nik.konverter.model.Repository
 import com.nik.konverter.model.forms.ActionResult
 import com.nik.konverter.ui.base.BaseViewModel
 
-open class SplashViewModel: BaseViewModel<String?, SplashViewState>() {
-    private val repository: Repository = Repository()
+open class SplashViewModel(private val repository: Repository): BaseViewModel<String?, SplashViewState>() {
 
     init{
         viewStateLiveData.value = SplashViewState()
     }
-    fun update(context: Context) {
-        repository.updateData(context).observeForever {
+    fun update() {
+        repository.updateData().observeForever {
             when(it) {
                 is ActionResult.Success<*> -> {
                     viewStateLiveData.value = SplashViewState("Данные обновлены")
