@@ -10,7 +10,7 @@ import com.nik.konverter.model.Repository
 import com.nik.konverter.model.forms.ActionResult
 import com.nik.konverter.ui.base.BaseViewModel
 
-open class SplashViewModel(private val repository: Repository): BaseViewModel<String?, SplashViewState>() {
+class SplashViewModel(private val repository: Repository): BaseViewModel<String?, SplashViewState>() {
 
     init{
         viewStateLiveData.value = SplashViewState()
