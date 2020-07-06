@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.nik.konverter.ui.main.MainFragment"
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_valutasFragment"
+            app:destination="@id/valutasFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/valutasFragment"
+        android:name="com.nik.konverter.ui.valutes.ValutasFragment"
+        android:label="ValutasFragment" />
+</navigation>

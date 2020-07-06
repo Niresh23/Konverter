@@ -27,6 +27,7 @@ class DatabaseRepository private constructor(private val valutaDao: ValutaDao) {
     fun getValutas() = MutableLiveData<ActionResult>().apply {
         valutaDao.getValuaList().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe(object : DisposableSingleObserver<List<Valuta>>() {
+
                 override fun onSuccess(t: List<Valuta>) {
                     value = ActionResult.Success(t)
                 }

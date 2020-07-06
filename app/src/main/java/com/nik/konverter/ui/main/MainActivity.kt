@@ -3,14 +3,13 @@ package com.nik.konverter.ui.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.nik.konverter.R
-import androidx.lifecycle.ViewModelProvider
 
 import com.nik.konverter.ui.valutes.ValutasFragment
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class MainActivity: AppCompatActivity(), MainFragment.OnChangeListener,
@@ -26,15 +25,14 @@ class MainActivity: AppCompatActivity(), MainFragment.OnChangeListener,
         }
     }
 
-    lateinit var model: MainViewModel
-    val layoutRes: Int = R.layout.activity_main
+    private val viewModel by viewModel<MainViewModel>()
+    private val layoutRes: Int = R.layout.activity_main
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutRes)
-        model = ViewModelProvider(this).get(MainViewModel::class.java)
         val message = intent.getStringExtra(MESSAGE_EXTRA)
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-        model.getData(this)
+        viewModel.getData(this)
         openFragment(mainFragment)
     }
 
@@ -53,7 +51,7 @@ class MainActivity: AppCompatActivity(), MainFragment.OnChangeListener,
     }
 
     private fun openFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_layout, fragment)
+        supportFragmentManager.beginTransaction().replace(R.id.nav_host_Fragment, fragment)
             .addToBackStack(null).commit()
     }
 

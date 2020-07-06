@@ -12,8 +12,8 @@ import com.nik.konverter.model.forms.DataResult
 import com.nik.konverter.ui.valutes.ValutasViewState
 import java.lang.Exception
 
-class MainViewModel: ViewModel() {
-    private val repository = Repository()
+class MainViewModel constructor(private val repository: Repository): ViewModel() {
+
     private val ID_USD = "R01235"
     private val ID_RUB = "R99999"
     private val mainViewStateLiveData = MutableLiveData<MainViewState>()
@@ -27,8 +27,8 @@ class MainViewModel: ViewModel() {
         valutasViewStateLiveData.value = ValutasViewState()
     }
 
-    fun updateValutasViewState(context: Context) {
-        repository.getValutasResult(context).observeForever { t: ActionResult? ->
+    fun updateValutasViewState() {
+        repository.getValutasResult().observeForever { t: ActionResult? ->
             t ?: return@observeForever
             when(t) {
                 is ActionResult.Success<*> -> valutasViewStateLiveData.value = ValutasViewState( valutas = t.data as List<Valuta>)
@@ -38,7 +38,7 @@ class MainViewModel: ViewModel() {
     }
 
     fun getData(context: Context) {
-        repository.getValutasResult(context).observeForever{
+        repository.getValutasResult().observeForever{
             when(it) {
                 is ActionResult.Success<*> -> {
                     if (dataResult == null) dataResult = process(it.data as List<Valuta>, ID_RUB, ID_USD)

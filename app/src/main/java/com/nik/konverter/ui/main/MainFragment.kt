@@ -2,7 +2,6 @@ package com.nik.konverter.ui.main
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -13,11 +12,11 @@ import kotlinx.android.synthetic.main.fragment_main.*
 import androidx.lifecycle.Observer
 import com.nik.konverter.R
 import com.nik.konverter.model.forms.DataResult
-import androidx.lifecycle.ViewModelProvider
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class MainFragment: Fragment() {
 
-    lateinit var model: MainViewModel
+    private val model by sharedViewModel<MainViewModel>()
     private lateinit var listener: OnChangeListener
     private val leftKeyListener = View.OnKeyListener { _, keyCode, event ->
         if((event.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
@@ -25,6 +24,7 @@ class MainFragment: Fragment() {
         }
         return@OnKeyListener false
     }
+
     private val rightKeyListener = View.OnKeyListener { _, keyCode, event ->
         if((event.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
             model.rightValueChanged(right_edit_text.text.toString())
@@ -32,15 +32,11 @@ class MainFragment: Fragment() {
         return@OnKeyListener false
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        model = ViewModelProvider(activity!!).get(MainViewModel::class.java)
-    }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         listener = activity as OnChangeListener
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

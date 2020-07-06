@@ -27,5 +27,6 @@ data class Valute (
     var name: String = "",
 
     @field:Element(name = "Value", required = false)
-    var value: String = "")
+    var value: String = ""
+)
 

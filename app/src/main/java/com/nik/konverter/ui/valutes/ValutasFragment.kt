@@ -2,7 +2,6 @@ package com.nik.konverter.ui.valutes
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,21 +14,16 @@ import androidx.lifecycle.Observer
 import com.nik.konverter.database.Valuta
 import com.nik.konverter.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.fragment_valutas.*
-import androidx.lifecycle.ViewModelProvider
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class ValutasFragment: Fragment() {
 
     lateinit var onValutaChanged: OnValutaChanged
-    val layoutRes: Int = R.layout.fragment_valutas
+    private val layoutRes: Int = R.layout.fragment_valutas
     lateinit var adapter: ValuteRVAdapter
-    lateinit var model: MainViewModel
+    private val model by sharedViewModel<MainViewModel>()
     private var side:String? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        activity?.apply {
-            model = ViewModelProvider(activity!!).get(MainViewModel::class.java)
-        }
-    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         onValutaChanged = context as OnValutaChanged
@@ -53,7 +47,7 @@ class ValutasFragment: Fragment() {
             }
             renderData(viewState.valutas)
         })
-        model.updateValutasViewState(this.context!!)
+        model.updateValutasViewState()
         adapter = ValuteRVAdapter{
             if(side == "LEFT") model.leftValutaChanged(this.activity!!, it.id)
             else if(side == "RIGHT") model.rightValutaChanged(this.activity!!, it.id)

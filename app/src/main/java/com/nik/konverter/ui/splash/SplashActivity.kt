@@ -1,7 +1,5 @@
 package com.nik.konverter.ui.splash
 
-import android.os.Bundle
-import android.util.Log
 import com.nik.konverter.ui.base.BaseActivity
 import com.nik.konverter.ui.main.MainActivity
 import org.koin.android.viewmodel.ext.android.viewModel

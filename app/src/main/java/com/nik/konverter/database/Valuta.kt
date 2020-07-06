@@ -9,11 +9,21 @@ import com.nik.konverter.model.forms.Valute
 data class Valuta(
     @PrimaryKey
     val id: String,
+
     @ColumnInfo
     val name: String,
+
     @ColumnInfo
     val charCode: String,
+
     @ColumnInfo
-    val value: String)
+    val value: String,
+
+    @ColumnInfo
+    val nominal: String,
+
+    @ColumnInfo
+    val numCode: String
+)
 
 

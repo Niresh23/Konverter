@@ -8,4 +8,5 @@ data class DataResult(
     var resultLeft: String? = null,
     var resultRight: String? = null,
     var charCodeLeft: String? = null,
-    var charCodeRight: String? = null)
+    var charCodeRight: String? = null
+)

@@ -4,35 +4,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorCardBackground">
+    android:background="@color/colorCardBackground"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="8dp"
+    android:layout_margin="6dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="75dp"
         android:orientation="horizontal">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_name"
             android:layout_width="285dp"
-            android:layout_height="75dp"
-            android:layout_margin="8dp"
-            android:background="@color/colorCardBackground"
+            android:layout_height="match_parent"
+            android:textSize="18sp" />
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:background="@color/colorPrimaryDark" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_char_code"
-            android:layout_width="100dp"
-            android:layout_height="75dp"
-            android:layout_margin="8dp"
-            android:background="@color/colorCardBackground"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_name"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="30sp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

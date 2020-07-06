@@ -15,6 +15,6 @@ class ValutaAdapter {
     }
 
     private fun adapter(valute: Valute): Valuta {
-        return Valuta(valute.id, valute.name, valute.charCode, valute.value)
+        return Valuta(valute.id, valute.name, valute.charCode, valute.value, valute.nominal, valute.numCode)
     }
 }
